@@ -1,0 +1,4 @@
+description = "Design review of the current changes or named files against the LLD rules"
+prompt = """
+Use the lld-review skill (skills/lld-review/SKILL.md). Review target: {{args}}. If no target is given, review the uncommitted changes, or the last commit if there are none. Change no code.
+"""

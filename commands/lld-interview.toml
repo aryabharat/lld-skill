@@ -1,0 +1,4 @@
+description = "Mock LLD or machine-coding interview, or coach mode"
+prompt = """
+Use the lld-interview skill (skills/lld-interview/SKILL.md). Arguments: {{args}}. Default to mock mode, 60 minutes. Stay in the interviewer role until feedback.
+"""

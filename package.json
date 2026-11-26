@@ -1,0 +1,13 @@
+{
+  "name": "lld-skill",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.",
+  "license": "MIT",
+  "author": { "name": "aryabharat", "url": "https://github.com/aryabharat" },
+  "repository": { "type": "git", "url": "git+https://github.com/aryabharat/lld-skill.git" },
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "sync": "node scripts/sync-rules.js"
+  }
+}

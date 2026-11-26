@@ -1,0 +1,18 @@
+{
+  "name": "lld",
+  "version": "2.0.0",
+  "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.",
+  "author": { "name": "aryabharat", "url": "https://github.com/aryabharat" },
+  "homepage": "https://github.com/aryabharat/lld-skill",
+  "repository": "https://github.com/aryabharat/lld-skill",
+  "license": "MIT",
+  "keywords": ["low-level-design", "design-patterns", "solid", "concurrency"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "LLD",
+    "shortDescription": "Low-level design: classes, APIs, patterns, concurrency, tests",
+    "category": "Coding",
+    "capabilities": ["Instructions"],
+    "defaultPrompt": ["Design the classes and APIs for this feature.", "Review this diff for design problems.", "Which pattern fits here, and which should I avoid?"]
+  }
+}

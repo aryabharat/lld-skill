@@ -1,0 +1,4 @@
+description = "Design classes, APIs, data structures, concurrency and tests for a task (LLD skill)"
+prompt = """
+Use the lld skill (skills/lld/SKILL.md) for this task: {{args}}. Classify the problem, follow the loop, read only the reference files you need, and answer in the skill's output format, proportional to the question.
+"""

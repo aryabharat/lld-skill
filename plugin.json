@@ -1,0 +1,6 @@
+{
+  "name": "lld",
+  "version": "2.0.0",
+  "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.",
+  "skills": "./skills/"
+}

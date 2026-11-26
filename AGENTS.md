@@ -1,0 +1,51 @@
+# LLD: low-level design rules
+
+When you design or change classes, modules, APIs or in-process components, judge every choice by three tests: is it readable, can the next feature be added without editing what works, is it correct. Find the real problem first; reach for a principle or pattern only when it removes that problem, and say which option you rejected and why.
+
+## Before you design
+
+- Restate the task with one concrete example. List every requirement, then pick the 3-6 that matter; name what you are skipping (auth, payments, CRUD, notifications) instead of silently dropping it.
+- Start from the critical API. Write its signature and return type first and work backwards to the objects and fields it needs. Do not start with User/auth/model boilerplate.
+- Engineering components (cache, queue, limiter, scheduler): API first, then data structures, then threads. Product features: entities and services first, then the main flow.
+
+## Objects
+
+- One reason to change per class. Split by who owns which change, not by line count.
+- Names must say what a thing is or returns. A method that returns a symbol is `getSymbol`, not `getCell`.
+- Pull nested maps, parallel maps keyed alike, and mutated lists into a named class that owns them and validates at its own entry point.
+- Inherit only when "X is a Y" is true for every subtype and the base contains only what every subtype supports. A mode or flag (timed, premium) is a field or a composed object, not a subclass.
+- Do not add a method to a base interface to avoid a cast; use a narrower interface or a typed generic.
+- Return result objects, not booleans, when there are more than two outcomes or you must say who/why.
+- Prefer immutable value objects. For multi-field invariants, build a new snapshot and swap the reference.
+
+## Change requests on existing code
+
+- A new variant should be an addition, not an edit: rules as a list of rule objects, algorithms behind a strategy interface, side effects as events on a bus.
+- A chain of independent `if (cond) return` checks that every feature edits becomes a rule list. If the rules depend on order, keep explicit if/else with named methods instead.
+- Do not deduplicate by matching tokens; extract a shared concept only when it is the same domain idea. Revert a refactor that made the code harder to read.
+- Reject patterns that do not fit (State with a dense transition mesh, Observer with one fixed recipient, Builder for two fields). Say so.
+
+## Data structures and algorithms
+
+- Choose structures from every operation the API needs and state the cost of each. Lookups by range or "first after T" need a sorted map, not a hash map.
+- Two access paths over the same objects mean two indexes; update both on every mutation path.
+- Ship the simple explainable algorithm; name the optimal one and its cost (greedy debt settling vs subset sum).
+
+## Concurrency and IO
+
+- Name every piece of shared mutable state and give each one a mechanism: a lock over the whole composite object, a keyed single-thread executor `hash(key) % N` (narrowest key that keeps the needed order), an immutable snapshot swap, or a concurrent collection.
+- A lock gives exclusivity, not ordering. Never wait on a future while holding the lock the completer needs.
+- Request threads never block on IO: return futures, run continuations on an executor you own, do not block in constructors.
+- Retry only errors marked retryable, with a limit; send the rest to a dead-letter queue; make writes idempotent with client-supplied ids.
+- Pick a fail-open or fail-closed default on purpose (a rate limiter fails open).
+
+## Tests
+
+- Never read the system clock in domain code or tests; inject time.
+- Test rules with scripted inputs, never with moves an AI or other changeable strategy chooses.
+- Turn the worked example into a test with exact expected values; when it fails, check the layers bottom-up.
+- New non-trivial logic leaves at least one test.
+
+## Output
+
+For a design: assumptions and skipped scope, core requirements, entities, API signatures, a class diagram, the core algorithm with costs, patterns used and rejected, the concurrency plan, code for the critical path, tests, and how the next requirement slots in. Keep it proportional: a one-line question gets a short answer.

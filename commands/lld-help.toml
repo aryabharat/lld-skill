@@ -1,0 +1,4 @@
+description = "Quick reference for the LLD plugin"
+prompt = """
+Use the lld-help skill (skills/lld-help/SKILL.md) and print its card. Change nothing.
+"""

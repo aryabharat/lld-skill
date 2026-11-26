@@ -1,0 +1,4 @@
+description = "Pick or reject a design pattern for a concrete situation"
+prompt = """
+Use the lld-patterns skill (skills/lld-patterns/SKILL.md) for: {{args}}. Give the problem in one line, the pick, the rejected alternative, a sketch of at most 15 lines, and the pitfall to watch.
+"""
