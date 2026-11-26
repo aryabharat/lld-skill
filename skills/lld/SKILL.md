@@ -36,8 +36,8 @@ Workflow, timings and what to skip: [references/workflow.md](references/workflow
 2. **API first.** Write the critical signature and its return type; work backwards to objects and fields. Result objects over booleans when there are more than two outcomes. Futures for anything that does IO.
 3. **Objects.** One owner per piece of data, validated at its entry point; names that do not lie; nested or parallel maps become classes; inheritance only for true is-a; modes are fields or composed objects.
 4. **Data structures and algorithm.** Pick from every operation's cost. Ranges and "first after T" need sorted maps; two access paths mean two indexes kept in sync. Simple algorithm first, name the optimal one.
-5. **Extensibility check.** Pretend the next likely requirement arrives. If it forces edits to tested code, move the varying part out: rule list, strategy, event, builder, factory. If no change is likely, leave it simple.
-6. **Concurrency pass.** List shared mutable state and give each a mechanism (whole-object lock, keyed single-thread executor, snapshot swap, concurrent collection). Request threads never block on IO. Retries only for retryable errors.
+5. **Extensibility check, with restraint.** Pretend the next likely requirement arrives. Refactor toward a rule list, strategy, event, builder or factory only when there is evidence the change will keep coming: the user says so, the code already shows the repetition (the same kind of edit for the third time), or the request itself adds the second variant of a family the product clearly grows. Otherwise make the smallest clean change, and name the refactor and its trigger in one line ("if a third draw rule arrives, move these checks into a rule list"). The course itself refactored only after a change request exposed the pain.
+6. **Concurrency pass.** List shared mutable state and give each a mechanism (whole-object lock, keyed single-thread executor, snapshot swap, concurrent collection). Reader and event-loop threads never block on IO (thread-per-request servers may). Retries only for retryable errors.
 7. **Tests.** Inject time; script inputs; one unit at a time; the worked example as an exact-number test.
 
 Every rule in the course, one line each, by situation: [references/decision-index.md](references/decision-index.md).
@@ -62,13 +62,34 @@ Read only the files the task needs. For a known problem, open its case study bef
 - Never edit tested core code to add a variant when a list of objects, a strategy or an event would take it as an addition.
 - Never put a member on a base type unless every subtype supports it in that exact form.
 - Never read the system clock in domain code or tests.
-- Never block a request or reader thread on IO, and never wait on a future while holding the lock its completer needs.
+- Never block a socket-reader or event-loop thread on IO, and never wait on a future while holding the lock its completer needs.
 - Never keep the same key in parallel maps; never put lists in a single DB column.
 - Do not over-engineer: no config DSL where a generic key works, no pattern for two fields, no micro-optimisation that hurts reading.
 
-## 5. Output
+## 5. Before you show code
 
-Match the size of the answer to the question. For "design X" or a new module, give:
+Check the critical path for these, which reviewers catch most often:
+
+- **Order of side effects**: compute everything that can fail (price, validation) before you commit state (close the ticket, mark a status, send). If a later step fails, nothing is left half-done; otherwise write the compensation.
+- **Money**: integer minor units or a decimal type end to end. No `double` anywhere in the path, including percentage helpers. State the rounding rule.
+- **Time**: read the injected clock once per operation and reuse the value.
+- **Schema**: every foreign key has a deliberate `ON DELETE` behaviour; every id has a generation strategy; audit columns like `granted_by` must not block deleting the user.
+- **Prose matches code**: if you say "single choke point" or "after commit", the sketch must do exactly that.
+
+## 6. Output
+
+**Size first.** The answer should be as long as the question needs, and no longer. Budgets:
+
+| Question | Shape | Rough size |
+|---|---|---|
+| Yes/no or "which pattern" | choice, reason, rejected option, flip condition, optional tiny sketch | under 250 words |
+| Change to existing code | the diff, the one or two decisions behind it, tests, the deferred refactor and its trigger | under 600 words |
+| Review | findings only, each tied to a line and a concrete failure | under 900 words |
+| Design a component or feature | the format below, trimmed to what matters | under 1500 words |
+
+No Mermaid diagram unless asked or there are more than five classes. No section that only restates the question. Skip sections that have nothing to say.
+
+For "design X" or a new module, give:
 
 1. Assumptions and skipped scope
 2. Core requirements

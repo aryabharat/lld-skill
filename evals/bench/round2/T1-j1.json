@@ -1,0 +1,24 @@
+{
+  "task": "T1",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 7,
+      "errors": ["`payments` field used in exit() is never declared", "Diagram says PricingRule.apply returns Adjustment, code returns long (inconsistent)", "While a ticket is EXITING a concurrent exit gets TicketAlreadyClosed although the ticket may revert to ACTIVE on payment failure (misleading error)", "Test numbering out of order (11 before 9)"],
+      "note": "Strongest overall: atomic skip-list claim, CAS-guarded exit with correct side-effect ordering and compensation, per-hour pricing with hand-checkable test numbers, only minor code inconsistencies."},
+    "B": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": ["Between active.remove and a pricing failure the ticket is briefly invisible, so a concurrent retry gets 'unknown ticket' (minor)", "Stray formatting artefacts ('ponytail:', backtick-wrapped scope lines)"],
+      "note": "Tight, correct design with atomic pollFirst, rollback on pricing failure, verified test arithmetic and a mutation check proving the concurrency test can fail; rejected alternatives are thinner than A's."},
+    "C": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 8, "proportionality": 8,
+      "errors": ["exit() removes the ticket before pricing; if fees.calculate throws, the spot is never released (leak)", "release() uses addFirst and claims 'nearest spot reused first', which is false for a spot from a higher floor", "Weekday/weekend decided by entry day only, so a Friday-night-to-Saturday stay is mispriced (stated assumption but weak)", "NightRateRule.overlapsNight is a stub returning false; Customer type undefined"],
+      "note": "Sound lock-free allocation and rule list, but exit ordering leaks spots on failure and the release-order claim is wrong."},
+    "D": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 7, "proportionality": 7,
+      "errors": ["exit() removes the ticket before pricing; a pricing exception leaks the spot and leaves the plate marked as parked", "calculate() rejects exit == entry, so a zero-minute stay throws instead of charging the minimum hour", "ZoneId hard-coded inside exit(); floorOf undefined", "SpotAllocationStrategy interface is speculative for a single policy"],
+      "note": "Correct per-floor lock-free queues and per-hour slicing, but failure ordering on exit and the zero-minute rejection are real defects."},
+    "E": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 8, "clarity": 9, "proportionality": 7,
+      "errors": ["free map is keyed by VehicleType but populated and released via spot.size() (a SpotSize), so it would not compile or would NPE", "leave() frees the spot and removes the ticket before pricing; a pricing failure loses the fee", "Assumptions say weekend is judged by entry day, then say and code hour-by-hour pricing (contradiction)"],
+      "note": "Best-argued pricing structure (explicit stages, design-it-twice) and a correct single lock, but the allocation map has a key-type bug and exit ordering is unsafe."},
+    "F": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 7,
+      "errors": ["exit() closes the ticket before building ParkingSession/pricing; an exit-before-entry exception leaves the ticket closed and the spot never released", "No ticket registry: exit takes a Ticket object, so lookup by id and forged tickets are unhandled", "Weekend decided by entry day only (stated and pinned by test, but misprices cross-midnight stays)", "Unused fixed Clock in test and stubbed test bodies"],
+      "note": "Clean rule list with applied-rule audit, correct atomic queue, trace and a real concurrency test, let down by close-before-price ordering."}
+  },
+  "ranking": ["A","B","F","C","E","D"]
+}

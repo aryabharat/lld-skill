@@ -1,0 +1,24 @@
+{
+  "task": "T2",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 6,
+          "errors": ["Calls the engine querying b.moveCount() 'Tell, Don't Ask', but it is exactly asking; the principle is misapplied"],
+          "note": "Correct and complete: wins first, board-owned count, configurable limit, boundary tests, clear flip point; a bit long and one misnamed principle."},
+    "B": {"checklist": [1,1,1,1,0,1], "correctness": 8, "design": 7, "clarity": 8, "proportionality": 8,
+          "errors": ["Limit stays a static final constant inside the engine (only mentions a constructor parameter as an option)", "Says 'Two things to get right' then lists three (cosmetic)"],
+          "note": "Sound minimal change with good alternatives (pass count in, movesSinceLastWin variant) but the limit is hard-coded."},
+    "C": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 7,
+          "errors": [],
+          "note": "Correct, well-reasoned ownership (count on board, limit on engine), catches board-copy pitfall, good small-limit tests; slightly wordy."},
+    "D": {"checklist": [0,0,1,1,0,1], "correctness": 8, "design": 6, "clarity": 6, "proportionality": 7,
+          "errors": ["Limit hard-coded as a static constant", "Never discusses the open-closed issue or a rule list; adds an unrequested refactor (hasWinningLine) instead", "Claims it would 'not add a new if with a magic number' while the result is effectively the same added condition with a constant"],
+          "note": "Works, but hard-codes the limit, skips the rule-list question, and refactors win checks beyond the ask."},
+    "E": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 9,
+          "errors": [],
+          "note": "Right-sized and fully correct, with a useful point that the move loop must refuse moves after the game ends and a clear trigger for the rule-list refactor."},
+    "F": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 7,
+          "errors": ["'Only matters on boards with 50 or more cells' is slightly loose (a board with exactly 50 cells fills at the same move); trivial", "Test helpers mix cells(...) and cell(...) naming"],
+          "note": "Strongest reasoning (explicit counter vs filled cells, rejected moves don't count, undo/load) with concrete verified tests; a bit longer than needed."}
+  },
+  "ranking": ["E","F","C","A","B","D"]
+}

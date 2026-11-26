@@ -22,7 +22,7 @@ Review what the user names (diff, staged changes, branch, PR, files, a pasted de
 ## Look for, in this order
 
 1. **Correctness**: wrong result, missed edge case, validation missing at the entry point, invariants not kept (sums, indexes out of sync, both indexes not updated).
-2. **Concurrency and IO**: unguarded shared state, check-then-act races, per-structure thread safety assumed to make a composite safe, lock held while waiting on a future, request thread blocked on IO, ordering assumed from a thread pool, retries on non-retryable errors, no idempotency.
+2. **Concurrency and IO**: unguarded shared state, check-then-act races, per-structure thread safety assumed to make a composite safe, lock held while waiting on a future, a socket-reader or event-loop thread blocked on IO (synchronous IO in a thread-per-request server is normal), ordering assumed from a thread pool, retries on non-retryable errors, no idempotency.
 3. **Extensibility**: a new variant added by editing a tested switch/if-chain, a member on a base type that some subtype cannot honour, a flag modelled as a subclass, duplicated methods differing only by parameter type, a central class every feature must edit.
 4. **Objects and naming**: names that lie, god classes, parallel maps keyed alike, nested maps, data owned by the wrong class, booleans where a result object is needed.
 5. **Data structures**: an operation that is O(n) where the API needs O(log n) or O(1); hash maps used for range or nearest lookups; lists in DB columns.
@@ -30,6 +30,10 @@ Review what the user names (diff, staged changes, branch, PR, files, a pasted de
 7. **Over-engineering**: a pattern with no problem behind it, a DSL where a key works, a micro-optimisation that hurts reading. Removing it is a valid finding.
 
 Every finding needs a concrete case (input, interleaving, or the next feature that breaks it). Re-read the lines to confirm. No style taste, no vague worries.
+
+**Severity discipline.** Must fix = wrong results, races that corrupt or double-act, data loss, leaks that grow without bound, security. A design rule the diff breaks without an observed failure (sync IO on a request thread, a missing abstraction) is Should fix at most, and the fix must keep the caller's contract unless you say why it has to change. Stay inside the diff: do not turn a review into a redesign. Fix sketches must compile and must handle a synchronous throw as well as a failed future.
+
+**Length.** Under ~900 words. One line per Nice to have. Do not restate the rules file; cite the rule in a few words.
 
 ## Output
 
@@ -39,8 +43,7 @@ Then numbered findings grouped **Must fix / Should fix / Nice to have**. Each fi
 
 - **Title** with `file:lines`
 - **Problem**: what goes wrong, with the concrete case
-- **Fix**: the smallest change, with a before/after sketch when it helps; name the principle or pattern only if it explains the fix
-- **Rule**: the course rule it breaks, from the checklist
+- **Fix**: the smallest change that stays inside the diff, with a short sketch when it helps; name the principle or pattern in a few words only if it explains the fix
 
 End with **Verdict** (ship / ship after must-fixes / redesign), **Skipped on purpose** (suggestions you considered and rejected as not worth it, with why), and **Not checked** if something mattered and you could not check it. Nothing found: "Looks good. Ship."
 

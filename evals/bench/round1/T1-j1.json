@@ -1,0 +1,24 @@
+{
+  "task": "T1",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 5,
+      "errors": ["exit() closes the ticket before calculating the fee; if calculate throws (missing rate), the ticket is CLOSED but the spot is never released", "Money.percent goes through a double (paise*pct/100.0); harmless at these magnitudes but inconsistent with the no-double rule"],
+      "note": "Most complete and correct design (per-hour rate card, ordered adjustments, atomic pollFirst, DB backstop, idempotent exit), but much longer than the question needs."},
+    "B": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": ["Assumption says weekend is judged by the entry day, then the code prices hour by hour, so the two contradict each other", "StandardTariff does not reject exit before entry (it silently charges one hour)", "Constructor requires the concrete class BaseRate last via instanceof, which couples the tariff to one implementation", "leave() puts a freed spot back with addFirst, so 'lowest floor first' does not hold after churn"],
+      "note": "A clean single-lock design with a well-argued two-stage tariff (rates, then adjustments sorted by kind); correct, with small inconsistencies."},
+    "C": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 7, "proportionality": 8,
+      "errors": ["exit() removes the ticket before calculating the fee; if the fee calculation throws, the ticket is lost and the spot is never released", "ZoneId is hard-coded inside exit() instead of injected", "Rejects a 0-minute stay (!end.isAfter(start)) instead of charging the one-hour minimum", "RateTable takes only DayType, so night rate does not fit; the answer admits the signature should change and leaves it unchanged", "FeeAdjustment mutates the breakdown as a side effect of apply"],
+      "note": "Correct lock-free per-floor queues and hourly slicing, but the pricing interface is left knowingly wrong for night rate, and exit has a leak path."},
+    "D": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 7, "clarity": 8, "proportionality": 6,
+      "errors": ["Weekend is decided by the entry day only, so a Fri 23:30 to Sat stay is billed all at weekday rate (stated as a v1 assumption, but weaker than slicing)", "Quote.plus clamps at zero on every step, so a negative intermediate is silently hidden instead of only the final total", "ParkingLot keeps no ticket registry: exit takes the Ticket object from the caller, so a gate with only a ticket id cannot exit"],
+      "note": "Sound atomic allocation and a rule list with an applied-rules audit plus real JUnit tests, but long (the trace and tests are listed twice) and the pricing is coarse."},
+    "E": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 8, "proportionality": 8,
+      "errors": ["NightRateRule.overlapsNight is a stub that always returns false", "Weekend is decided by the entry day only (stated)", "exit() removes the ticket before the fee calculation; if it throws, the spot leaks", "RateTable.base throws NPE on a missing rate instead of failing clearly", "Night rate modelled as a flat fee adjustment rather than a rate for night hours, which may not match the product's meaning"],
+      "note": "Proportionate and well-reasoned on smells and the choice of pattern, but the pricing is the coarsest and the night rule is a placeholder."},
+    "F": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 7, "proportionality": 8,
+      "errors": ["Stray formatting artifacts ('skipped:' in backticks, a 'ponytail:' line) hurt readability", "On a pricing failure, exit re-puts the ticket; a concurrent second exit in that window gets 'unknown ticket' (minor)"],
+      "note": "Tight and correct: hourly slicing, an explicit ordered pipeline, an atomic skip-list claim, time passed in as an argument, and a concrete test table including a check that the concurrency test can fail."}
+  },
+  "ranking": ["A","F","B","D","C","E"]
+}

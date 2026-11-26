@@ -1,0 +1,12 @@
+{
+  "task": "T2",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 9, "errors": ["Minor: infers Board already tracks moves from lastPlayer(), which is an assumption, but it hedges with 'if it does not exist yet'"], "note": "Tight, correct minimal change with configurable limit, board-owned count, pure getState, a game-over guard, and a clear trigger for when to extract rule objects."},
+    "B": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8, "errors": [], "note": "Correct minimal change with well-argued placement of count (Board) vs limit (engine), useful notes on 3x3 never reaching 50 and copying moveCount in board copies, and concrete boundary tests."},
+    "C": {"checklist": [1,1,1,1,0,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 9, "errors": [], "note": "Clean and correct, extracts hasWinningLine and keeps the board as count owner, but leaves the limit as a static constant and explicitly defers configurability."},
+    "D": {"checklist": [1,1,1,1,0,1], "correctness": 8, "design": 8, "clarity": 7, "proportionality": 8, "errors": ["Phrase 'moves played since the last win check' is wrong/confusing; the count is total moves", "Says 'Two things to get right' then lists three"], "note": "Correct minimal change with a good fallback (pass count into getState) but the limit is a hard-coded constant and the prose is slightly sloppy."},
+    "E": {"checklist": [1,1,1,1,1,1], "correctness": 8, "design": 6, "clarity": 8, "proportionality": 4, "errors": ["Claims this is the second draw rule 'in a short time' and the chain will keep growing, which the task does not support", "Requires rowWin etc. to become static methods on a new LineChecks class to be usable as Predicate<Board> method refs, a larger move than stated"], "note": "Technically sound ordered rule-list refactor with good tests, but a ~40-line restructure for one added condition is over-engineered for the request."},
+    "F": {"checklist": [1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 8, "errors": ["Misapplies 'Tell, Don't Ask': the engine querying board.moveCount() is asking, not telling"], "note": "Correct minimal change with configurable limit, board-owned count, undo consideration, explicit PR decisions and full JUnit tests; one misnamed principle."}
+  },
+  "ranking": ["B","A","F","C","D","E"]
+}

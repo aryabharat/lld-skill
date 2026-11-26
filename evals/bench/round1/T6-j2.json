@@ -1,0 +1,43 @@
+{
+  "task": "T6",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 7,
+      "errors": [
+        "Miss check (under lock) and inflight.putIfAbsent are separate steps: if another thread's load installs and removes its inflight entry in between, a second redundant load starts, contradicting the stated 'one load' guarantee",
+        "If loadPool.execute rejects, the un-started future stays in inflight forever and every later get for that key hangs",
+        "Stray 'ponytail:' label in the trade-off note"
+      ],
+      "note": "Correct single-lock design with expired-first eviction via a lazy heap and a sound put-vs-load identity check; slightly more machinery than needed."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 6,
+      "errors": [
+        "Minor: waiters already holding an in-flight future receive the older loaded value after a put (acknowledged in notes)"
+      ],
+      "note": "Most rigorous answer: placeholder future inserted under the lock gives airtight single-flight, two consistent indexes, expired-first eviction and clear rejected options, but it is long."},
+    "C": {"checklist": [1,1,0,1,1,1,1], "correctness": 6, "design": 7, "clarity": 8, "proportionality": 8,
+      "errors": [
+        "put does inflight.remove(key) and install() as separate steps without the lock: a loader can succeed inflight.remove(key, mine) first, the put installs the new value, then the loader's install overwrites it with the stale DB value, breaking the claimed 'put wins' guarantee",
+        "install reads the clock outside the lock (harmless but inconsistent)",
+        "No expired-first eviction: expired entries hold capacity until LRU pushes them out (acknowledged)"
+      ],
+      "note": "Clean and well explained, but the put-vs-load check is not atomic with the install, so the race it claims to solve still exists."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 9,
+      "errors": [
+        "Minor: expired entries are not preferred for eviction (acknowledged, lazy expiry only)"
+      ],
+      "note": "Simplest fully correct answer: map and in-flight registry under one lock make hit/miss/register atomic, load runs outside the lock, put beats a stale load, and the rejected alternative is stated."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 7, "proportionality": 7,
+      "errors": [
+        "A put that lands during an in-flight load is overwritten by the loader's later put with stale DB data; the race is described but not fixed in the code",
+        "catch (Exception) only: an Error from the loader leaves `mine` never completed, so waiters blocked on join() hang forever (no timeout)",
+        "Eviction always takes the LRU tail even when expired entries exist (acknowledged)"
+      ],
+      "note": "Sound hand-rolled LRU list and single-flight, but leaves the known put-vs-load race unfixed in the shown code."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 7,
+      "errors": [
+        "catch (RuntimeException) only: an Error from the loader leaves the future in inFlight permanently, so every later get for that key times out",
+        "Sample tests use undefined helpers (waitUntilInFlight, await(latch))"
+      ],
+      "note": "Correct and well-reasoned: put and the loader's install both check inFlight under the lock, single-flight with re-check, plus concrete tests; a little long."}
+  },
+  "ranking": ["D","B","F","A","C","E"]
+}

@@ -1,0 +1,24 @@
+{
+  "task": "T8",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 6, "proportionality": 7,
+      "errors": ["Interface declares priority() as an in-group tie-break but the calculator never uses it (max by amount only; ties fall to list order)", "Test claim 'rule order in the list does not change the result' is false for which rule id is applied on in-group ties", "pct helper and several rule bodies elided with ..."],
+      "note": "Solid strategy + exclusivity groups + audit result with suppressed list and persistence plan, but a dead priority field and a wrong determinism claim, and few rejected alternatives."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 7, "proportionality": 7,
+      "errors": ["Tests say ties resolve by 'lower priority number / rule id' but there is no priority and merge keeps the earlier-registered rule"],
+      "note": "Correct, test-first refactor with verified characterization numbers, a negative CAP line so lines sum to total, and a safe migration adapter; one inconsistent tie-break claim."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 8,
+      "errors": ["Line amounts and cap are kept unrounded and persisted that way (e.g. 99.999), with rounding deferred to the caller, which is awkward for finance records"],
+      "note": "Clean split of what changes (rules) from what is stable (combining, cap, audit), duplicate-id guard, cap as its own line, and clear reasons for rejecting chain, pairwise exclusions and a rules engine."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 6,
+      "errors": ["Money.percent rounds down to paise, a behaviour change vs the old double code (documented, but the characterisation tests are said to stay green)", "Comment claims rule order does not matter, yet on equal amounts the first candidate in list order wins its group"],
+      "note": "Thorough and correct: Money value type, per-rule lines with APPLIED/SUPPRESSED/CAPPED and reasons, correct hand-checked numbers and good pattern trade-offs, but heavier than needed (separate StackingPolicy, long write-up)."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 7, "clarity": 7, "proportionality": 8,
+      "errors": ["Stray 'ponytail:' / 'skipped:' scaffolding text left in the answer"],
+      "note": "Correct and genuinely order-independent (ties by rule id, shuffle test, negative/duplicate guards) with rules as function records, but a static ALL list of lambdas is a weaker home for rules that grow collaborators, and leftover scaffolding hurts clarity."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": [],
+      "note": "Right-sized and correct: one interface, a general CouponRule, groups with suppressed ids, cappedBy recorded, behaviour-preserving claim justified, and clear 'when I would' deferrals."}
+  },
+  "ranking": ["C","D","F","E","B","A"]
+}

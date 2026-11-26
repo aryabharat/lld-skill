@@ -1,0 +1,12 @@
+{
+  "task": "T5",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 7, "errors": [], "note": "Complete, correct review with reserve-before-send via compute, token-guarded release, eviction and a strong test list; somewhat long."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 8, "errors": ["Service sketch calls throttle.release(key) without the reservation token, which could remove another caller's newer reservation; contradicts its own item 7 advice of remove(key, now)."], "note": "Covers every point with correct severity ordering; small inconsistency in the release sketch."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 7, "proportionality": 9, "errors": [], "note": "Tight, line-referenced findings and correct atomic acquire/release code; leaves channel key to product and omits per-instance scope."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8, "errors": [], "note": "Best balance: all issues, correct token-based throttle, keeps old API as wrappers, clear per-JVM scope note and test gaps."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 8, "errors": [], "note": "Correct and well-prioritised, Caffeine-backed throttle with injected ticker, and makes release-on-failure an explicit decision rather than defaulting it."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 7, "clarity": 8, "proportionality": 5, "errors": [], "note": "Thorough and correct, but pushes an async CompletableFuture redesign beyond the diff and pads each item with 'Rule' lines."}
+  },
+  "ranking": ["D","A","E","C","B","F"]
+}

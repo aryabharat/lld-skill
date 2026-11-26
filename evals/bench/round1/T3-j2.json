@@ -1,0 +1,12 @@
+{
+  "task": "T3",
+  "answers": {
+    "A": {"checklist": [1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 9, "errors": ["Snippet calls p.withX(5) on a record that does not declare withX; as written it does not compile (the fix is only in a comment)"], "note": "Right call and well-sized, but the example code calls a method the record does not define."},
+    "B": {"checklist": [1,1,1,1], "correctness": 10, "design": 9, "clarity": 9, "proportionality": 9, "errors": [], "note": "Concise, correct record plus optional factories, with a clear trigger for revisiting Builder."},
+    "C": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 10, "proportionality": 8, "errors": [], "note": "Explicit rejected options and a useful swapped-argument point; slightly longer than needed."},
+    "D": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 9, "errors": ["Wording 'make it possible to forget y at compile time' is garbled (means: forgetting y compiles, fails at runtime)"], "note": "Correct and balanced, acknowledges the swap-risk argument and dismisses it with reason."},
+    "E": {"checklist": [1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 7, "errors": [], "note": "Correct and clear but a bit padded with duplicated code and bullet list, at the edge of the length limit."},
+    "F": {"checklist": [1,1,1,0], "correctness": 8, "design": 7, "clarity": 8, "proportionality": 5, "errors": ["Claims a named factory Point.ofXY solves argument-swap; it only adds a name, positions can still be swapped", "'turns new Point(3, 4) into four lines' is an exaggeration"], "note": "Right answer but over-long, adding distanceTo, NaN validation and a test list the question did not ask for."}
+  },
+  "ranking": ["B","D","C","A","E","F"]
+}

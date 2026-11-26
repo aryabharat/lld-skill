@@ -1,0 +1,12 @@
+{
+  "task": "T5",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 6, "errors": ["metrics referenced in NotificationService but never declared or injected (sketch-level)"], "note": "Complete and correct review with a working reserve-before-send Throttle, token-safe release, eviction and a strong test list, but longer than the question needs."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 9, "errors": ["Suggested shape declares final fields (clock, clients) with no constructor, so it would not compile as written", "Suggested shape has no eviction despite flagging unbounded growth"], "note": "Tight, correctly prioritised findings with a correct atomic compute and conditional release; omits the per-JVM scope and blocking-IO points."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 7, "proportionality": 7, "errors": ["Design sketch calls throttle.release(key) without the reservation timestamp, so it can remove another caller's newer reservation; contradicts its own item 7 which correctly uses remove(key, now)"], "note": "Covers every point, but the design code's unconditional release reintroduces a race the text had already fixed, and memory/static are ranked above the cross-channel bug."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8, "errors": [], "note": "Correct atomic compute on a Caffeine map with expiry and injected clock-driven ticker, and an explicit, reasoned decision on whether to release the slot on send failure."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 7, "clarity": 9, "proportionality": 6, "errors": [], "note": "Correct and well-scoped about what was skipped and not checked, but pushes a CompletableFuture/async redesign and per-item 'Rule' lines that over-build a code review."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8, "errors": [], "note": "Fully correct, well-prioritised review with token-safe release, metrics, backward-compatible wrappers and a precise test list at a reasonable length."}
+  },
+  "ranking": ["F","A","D","B","E","C"]
+}

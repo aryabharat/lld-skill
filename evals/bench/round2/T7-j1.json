@@ -1,0 +1,12 @@
+{
+  "task": "T7",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 7, "errors": [], "note": "Complete and correct: DB-enforced same-org and team-member-is-org-member rules via composite FKs, cascade-supporting indexes, base permission, a correct last-admin lock and tests; slightly long and does not name the polymorphic-grant alternative it rejected."},
+    "B": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 9, "errors": [], "note": "Tight, correct schema with composite same-org FKs, query-driven index table, explicit rejected alternatives (polymorphic grants, list columns) and a sound last-admin note; skipping base permission is stated."},
+    "C": {"checklist": [1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 8, "errors": ["Lists 'outside collaborators' as not modelled although repo_user_grants already permits grants to non-members (minor inconsistency)"], "note": "Correct composite-FK design with a check query that also handles public/internal visibility and clear rejected options; no last-admin invariant."},
+    "D": {"checklist": [1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 8, "errors": [], "note": "Sound schema and hot query with justified indexes, rejected polymorphic table and sensible scale notes; omits the last-admin invariant and leaves public access vague."},
+    "E": {"checklist": [1,1,1,1,1,1], "correctness": 6, "design": 6, "clarity": 7, "proportionality": 7, "errors": ["granted_by REFERENCES users(id) with no ON DELETE action blocks deleting any user who ever granted access, contradicting the cascade intent on users", "team_memberships has no org_id/composite FK, so a non-member of the org can be added to a team; the rule is pushed to application code that must remember to clean up on org removal"], "note": "Reasonable grant tables and an effective-access view, but team membership is not tied to org membership in the schema and granted_by blocks user deletion."},
+    "F": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8, "errors": [], "note": "Query-driven schema with composite FKs, deliberate ON DELETE choices, a correct org-row lock for the last-admin rule and concrete tests; well reasoned."}
+  },
+  "ranking": ["B","F","A","C","D","E"]
+}

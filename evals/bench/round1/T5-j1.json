@@ -1,0 +1,24 @@
+{
+  "task": "T5",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8,
+          "errors": ["Suggested code never releases the slot on send failure; this is stated as a deliberate decision, so it is a minor gap rather than a bug"],
+          "note": "Tight, correct review: atomic compute reservation, per-channel key, Caffeine eviction with an injected ticker, and clear Blocking/Should-fix ordering."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8,
+          "errors": ["metrics field used in sketch but never declared (sketch-level only)"],
+          "note": "Most complete correct answer: token-based release via remove(key, token), a critique of the existing test, and the per-JVM scope note, without over-engineering."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 9,
+          "errors": ["Sketch has no constructor, so clock and the clients are never initialised", "Eviction is recommended but missing from the suggested code", "Throttle key in the code stays userId only (left open pending a product decision)"],
+          "note": "Concise, line-anchored findings that are all correct, with an atomic reserve-and-release sketch; slightly thinner on scope (per-JVM) and on eviction in code."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 8, "proportionality": 6,
+          "errors": ["Suggests LongSupplier of nanos while the window and code are in millis (inconsistent suggestion)", "metrics used in sketch but not declared"],
+          "note": "Thorough and correct, with a full deterministic plus concurrency test suite and safe eviction, but long for a diff review, and duplication is labelled only a nit."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 7, "proportionality": 7,
+          "errors": ["Code calls throttle.release(key) with no token, which can remove another caller's newer reservation; this contradicts its own remove(key, now) advice in the text", "Lists a FAILED result, but the code rethrows and never returns it"],
+          "note": "Covers every point, but the code and text disagree on releasing the slot, and the findings are a bit scattered."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 9, "proportionality": 4,
+          "errors": ["Makes moving to async CompletableFuture or executor sends a must-fix and states 'never block a request thread on IO' as a rule; that is overreach for this diff, and the change shifts the caller contract", "On failure, exceptionally swallows the exception into FAILED, which hides errors unless callers check the result"],
+          "note": "Very clear structure, with a verdict, a skipped-on-purpose list and not-checked items, but over-long and padded with rule lines, and it escalates an architectural change to must-fix."}
+  },
+  "ranking": ["B","A","C","D","E","F"]
+}

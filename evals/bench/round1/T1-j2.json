@@ -1,0 +1,24 @@
+{
+  "task": "T1",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 9,
+      "errors": ["Minor: ticket is removed from the active map before pricing and put back on failure; a concurrent second exit in that window gets 'unknown ticket', which is acceptable but not stated"],
+      "note": "Tight, correct design: pollFirst on a ConcurrentSkipListSet per size, an ordered BigDecimal pipeline with time passed in, per-hour day split, and a concurrency test with a mutation check that shows it can fail."},
+    "B": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 7,
+      "errors": ["Units are inconsistent: money is said to be in minor units, but rates are 40/h and the test expects 80, while the event surcharge is wired as 5000", "Weekday/weekend is decided by the entry day only, so a Fri 23:30 to Sat stay is billed all-weekday (stated v1 simplification)", "If pricing throws after ticket.close(), the spot is never released (leak)", "A released spot goes to the queue tail, so lowest-floor-first is lost after churn (acknowledged)", "Integer division truncates the member discount"],
+      "note": "Sound lock-free queue allocation and an ordered rule list with applied-rule tracking and good tests, but with unit inconsistencies and an entry-day-only weekend rule."},
+    "C": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 8, "proportionality": 8,
+      "errors": ["ParkingLot has final fields and no constructor, so it would not compile as shown; Customer is undefined", "NightRateRule.overlapsNight is a stub that returns false", "Weekend is decided by the entry day only, so stays that cross into the weekend are mispriced", "If fee calculation throws after active.remove, the spot leaks", "addFirst on release does not guarantee the nearest spot is reused first"],
+      "note": "Correct deque-based atomic claim and a proportionate rule list with good reasoning on rejected options, but the code is incomplete and the weekend rule is simplistic."},
+    "D": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 8, "clarity": 9, "proportionality": 7,
+      "errors": ["The free map is EnumMap<VehicleType, Deque<Spot>>, but the constructor and leave() index it with s.size()/t.spot().size(). Unless Spot.size() returns VehicleType this gets null and throws an NPE", "The assumptions contradict each other (weekend judged by entry day vs priced hour by hour); the code prices hour by hour", "Exit before entry is not rejected; the do-while charges one hour", "leave() frees the spot and drops the ticket before pricing, so a pricing failure loses the fee record", "A bike cannot use a larger spot (a stated simplification)"],
+      "note": "The most thoughtful pricing structure (hourly-rate stage plus adjustments sorted by kind) and clear reasoning for a single lock, undercut by a likely map-key type bug and a contradictory assumption."},
+    "E": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 7, "proportionality": 7,
+      "errors": ["The zone is hard-coded as ZoneId.of(\"Asia/Kolkata\") inside ParkingLot.exit instead of injected", "A zero-minute stay throws (!end.isAfter(t)) instead of charging a minimum", "floorOf is undefined, and the allocation strategy covers only sizes, not floor order", "If pricing throws after active.remove, the spot and plate leak", "The queue per floor does not keep spot order after release"],
+      "note": "Correct lock-free per-floor queues, ordered adjustments with a breakdown, and per-hour day split, with some loose ends (hard-coded zone, undefined helpers)."},
+    "F": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 5,
+      "errors": ["Money.percent uses double arithmetic (paise * pct / 100.0), which is minor but contradicts the no-double rule", "exit() does find() and then closeIfActive() with the find result; this is safe, but the fee is computed after the close, so a pricing failure leaves a closed ticket with no fee and an unreleased spot"],
+      "note": "Thorough and largely correct (skip-list pollFirst per floor/type, conditional close, compensation on insert failure, per-hour rate card, pinned adjustment order), but much longer than the question needs, with a DB layer, mermaid diagram and roadmap."}
+  },
+  "ranking": ["A","F","B","E","C","D"]
+}

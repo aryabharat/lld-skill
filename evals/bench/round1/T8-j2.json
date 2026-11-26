@@ -1,0 +1,44 @@
+{
+  "task": "T8",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 6, "proportionality": 8,
+      "errors": [
+        "DiscountRule declares priority() 'tie-break inside a group' but the calculator never uses it; ties go to whichever rule is listed first (Stream.max keeps the first), contradicting both the interface comment and the 'rule order does not change the result' test for applied ids",
+        "Code is elided (FlatOverThreshold constructor, id/group methods, pct helper undefined), so it does not compile as shown",
+        "Assumes Order.total() is BigDecimal without saying so"
+      ],
+      "note": "Correct overall shape with good audit/cap discussion, but a dead priority field and elided code; few rejected alternatives named."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8,
+      "errors": [
+        "Suppressed (matched but losing) rules are not recorded for finance, only applied lines",
+        "Minor: claim that getMonth()==Month.OCTOBER only works for LocalDate is imprecise (LocalDateTime/ZonedDateTime also work)"
+      ],
+      "note": "Clean, correct, well-justified design with the cap as a negative audit line, duplicate-id guard, explicit tie rule, and clearly rejected alternatives."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": [
+        "Applied line amounts are unrounded while total is rounded to 2 dp, so lines plus capAdjustment may not sum exactly to total",
+        "Stray 'ponytail:'/'skipped:' tag lines read as leftover template output"
+      ],
+      "note": "Rule-as-record-with-function is lean and correct, keeps current behaviour exactly (no groups yet), deterministic order-independent ties, verified characterisation numbers."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 6,
+      "errors": [
+        "Money.percent uses paise * pct without multiplyExact while plus/minus are overflow-checked and a test for overflow is promised",
+        "Money.percent truncates, silently changing amounts vs current behaviour (acknowledged only as 'rounding')",
+        "Assumes Order.total() returns Money"
+      ],
+      "note": "Thorough and correct with paise Money, separate StackingPolicy and auditable lines with reasons; the extra policy interface and length are somewhat heavy for the ask."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": [
+        "Per-line HALF_UP rounding in pct and cap changes results slightly vs the double version; not reflected in the 'behaviour is identical' claim beyond a brief mention"
+      ],
+      "note": "Solid, correct single-interface design with suppressed ids and cappedBy recorded, sensible deferrals, right-sized."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 8, "proportionality": 7,
+      "errors": [
+        "Tests claim ties break by 'lower priority number / rule id' but no priority exists and the merge keeps registration order",
+        "Mandatory group per rule means stacking relies on every rule inventing a unique group name; an accidental shared group silently suppresses a rule",
+        "Suppressed rules are not reported to finance"
+      ],
+      "note": "Works and has a good migration plan and concrete tests, but the mandatory-group model is awkward and the tie-break claim does not match the code."}
+  },
+  "ranking": ["B","C","E","D","A","F"]
+}

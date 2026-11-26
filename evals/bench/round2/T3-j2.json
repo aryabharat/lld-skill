@@ -1,0 +1,12 @@
+{
+  "task": "T3",
+  "answers": {
+    "A": {"checklist": [1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 9, "errors": ["Wording 'make it possible to forget y at compile time' is garbled (means forgetting y still compiles)", "Range(start, endExclusive, step, inclusive) revisit example is a slightly odd illustration"], "note": "Tight, correct no with record, factories and a clear flip condition; minor wording slip."},
+    "B": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8, "errors": [], "note": "Correct and well-argued with before/after call sites and flip condition, slightly wordier than needed (~260 words)."},
+    "C": {"checklist": [1,1,1,1], "correctness": 7, "design": 8, "clarity": 9, "proportionality": 9, "errors": ["Snippet calls p.withX(5) on a record declared with an empty body, so it would not compile as shown (withX only mentioned in a comment)"], "note": "Good reasoning and revisit guidance, but the example code is inconsistent."},
+    "D": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 10, "errors": [], "note": "Shortest fully correct answer: clear no, compile-time vs runtime guarantee, working record with factories, and when to revisit."},
+    "E": {"checklist": [1,1,1,0], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 5, "errors": [], "note": "Correct, with useful NaN validation and LatLng point, but adds distanceTo, a test list and extra code that bloat a simple question past 300 words."},
+    "F": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 10, "proportionality": 8, "errors": [], "note": "Explicit choice, rejected alternative and flip condition with factory-vs-builder distinction; bold-section structure slightly heavy for the question."}
+  },
+  "ranking": ["D", "F", "B", "A", "C", "E"]
+}

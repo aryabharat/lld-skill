@@ -14,6 +14,21 @@ With lld: "getState is a chain of independent checks that every rule change edit
            Watch out: if two rules depend on order, keep explicit if/else with named methods."
 ```
 
+## Benchmark
+
+Blind-judged against four other LLD skills and no skill, 8 tasks, 16 judges per round ([full results and method](evals/benchmark.md)):
+
+| Setup | Mean rank (1 best) | Correctness | Design | Decision clarity |
+|---|---|---|---|---|
+| **lld** | **2.56** | **8.5** | **8.6** | **8.9** |
+| qfzhao670/low-level-design-skill | 2.94 | 7.9 | 8.1 | 8.3 |
+| malay44/lld-skills | 3.31 | 8.3 | 8.2 | 8.0 |
+| tylerpayne/system-design-skill | 3.62 | 8.2 | 8.3 | 8.4 |
+| software-design-philosophy | 4.25 | 7.7 | 7.7 | 8.2 |
+| no skill | 4.31 | 7.5 | 7.8 | 8.0 |
+
+The top three are within judge noise, and this is after one round of fixes from the first run, where lld placed second because it over-built. See [evals/benchmark.md](evals/benchmark.md) before quoting it.
+
 ## How it was built
 
 All 94 captioned videos of the course (about 30 hours, 97 lessons) were transcribed from the player's captions. One agent per video then analysed what the lesson teaches: the problem behind each technique, the decision rules (when, do, because, flips when), the rejected alternatives, the trade-offs, the smells, how it applies in production, and what interviewers probe. Those 94 analyses (~150k words) were merged by theme into the reference files below, deduplicated, with every rule tagged by the lesson it came from (`[L58]`). Where the instructor changed his mind or the course's own code had a bug (the logger's lock-while-waiting deadlock), the files say so and give the final position.

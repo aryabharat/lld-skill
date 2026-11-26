@@ -1,0 +1,24 @@
+{
+  "task": "T5",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 7,
+          "errors": ["Concurrency test asserts on fakeEmail.sent.size() without stating the fake must be thread-safe (minor)", "metrics used in sketch but never injected (minor)"],
+          "note": "Complete, correctly prioritised review with a working reserve-before-send Throttle using conditional release, plus timeouts/blocking-IO and per-JVM scope; slightly long."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 5,
+          "errors": ["Rule 'never block a request thread on IO; IO methods return futures' is overstated and pushes an async redesign into a must-fix", "exceptionally() only cancels the reservation if the channel returns a failed future; a synchronous throw from channels.get(type).send leaks the reservation"],
+          "note": "Thorough and well-reasoned with explicit verdict, skipped options and not-checked list, but over-long and escalates async hand-off to must-fix."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 8,
+          "errors": ["Caffeine-backed sketch with fake-clock ticker is more machinery than needed; behaviour of compute returning the same value on expiry is left implicit (harmless here)"],
+          "note": "Concise and correct, covers every key issue and makes the release-on-failure choice explicit, though it defaults to not releasing and omits blocking IO on request threads."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 7, "proportionality": 7,
+          "errors": ["Code calls throttle.release(key) unconditionally while text recommends remove(key, now); with boolean tryAcquire there is no stamp, so release can remove another caller's newer reservation", "Severity ordering puts memory growth/static above the cross-channel key and silent-drop bugs"],
+          "note": "Covers all issues including blocking IO and multi-instance, but its sketch contradicts its own conditional-release advice and prioritisation is a bit off."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 6, "proportionality": 8,
+          "errors": ["Sketch declares final fields (clock, clients) with no constructor, so it would not compile as written", "Misses per-JVM scope and blocking provider IO on request threads"],
+          "note": "Compact line-referenced findings with a sound atomic reserve-and-release sketch, but terse code-span formatting hurts readability and it omits multi-instance and IO concerns."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8,
+          "errors": [],
+          "note": "Correct, well-prioritised review with clean Throttle/Sender sketch, token-based release, test gaps and a scoped per-JVM note; only omits blocking IO on request threads."}
+  },
+  "ranking": ["A","F","C","B","D","E"]
+}

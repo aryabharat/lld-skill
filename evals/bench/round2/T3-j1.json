@@ -1,0 +1,12 @@
+{
+  "task": "T3",
+  "answers": {
+    "A": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 9, "errors": [], "note": "Tight, correct no with record, factories, honest note on the x/y swap argument, and a clear revisit trigger; one slightly awkward sentence about forgetting y 'at compile time'."},
+    "B": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 10, "errors": [], "note": "Shortest complete answer: no, why, record plus static factories, and when Builder becomes reasonable."},
+    "C": {"checklist": [1,1,1,0], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 5, "errors": [], "note": "Correct and well reasoned, but adds validation code, a test list and geo asides that pad a yes/no question past 300 words."},
+    "D": {"checklist": [1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 7, "errors": [], "note": "Correct with a useful side-by-side call-site comparison, slightly long and with a mildly repetitive bullet list."},
+    "E": {"checklist": [1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 9, "errors": ["Code sample calls p.withX(5) on a record that does not define withX; it only compiles after adding the method mentioned in the comment"], "note": "Good reasoning and a nuanced revisit step (try withX before Builder), but the snippet is not compilable as written."},
+    "F": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 10, "proportionality": 8, "errors": [], "note": "Explicit rejected alternative and flip conditions, separating optional-field pain (Builder) from creation-logic pain (factory); slightly more structure than needed."}
+  },
+  "ranking": ["B","A","F","E","D","C"]
+}

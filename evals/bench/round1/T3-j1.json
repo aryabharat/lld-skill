@@ -1,0 +1,12 @@
+{
+  "task": "T3",
+  "answers": {
+    "A": {"checklist": [1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 8, "errors": ["Claims Point.of(x, y) solves the 'which argument is which' concern better than a builder; a positional factory does nothing for argument swaps", "Phrase 'forget y at compile time' is muddled (means it compiles with y missing)"], "note": "Correct and concise, with a clear revisit trigger, but overstates what Point.of does and the Range example is a slightly odd pivot."},
+    "B": {"checklist": [1,1,1,1], "correctness": 9, "design": 9, "clarity": 10, "proportionality": 9, "errors": [], "note": "Names the problem Builder solves, explicitly rejects Builder and a needless factory, gives a sound swap-risk fix (distinct type) and a concrete flip condition."},
+    "C": {"checklist": [1,1,1,0], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 5, "errors": [], "note": "Technically sound and well reasoned, but at ~310 words with a validation snippet and test list it is padded for a yes/no restraint question."},
+    "D": {"checklist": [1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 7, "errors": ["Lists Point.of(x, y) as a readability answer to call-site confusion; it is positional and does not help"], "note": "Good contrast of builder vs constructor and sensible revisit guidance, slightly long and repeats the factory overclaim."},
+    "E": {"checklist": [1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 9, "errors": ["Presents Point.of(x, y) as 'readable named construction'; it adds no readability over new Point(x, y)"], "note": "Short, correct, notes compile-time vs runtime guarantee loss and a clear revisit point; the of() factory is unnecessary."},
+    "F": {"checklist": [1,1,1,1], "correctness": 8, "design": 8, "clarity": 9, "proportionality": 8, "errors": ["Suggests Point.of(x, y) addresses mixed-up argument order; it does not"], "note": "Clear and right-sized with a good 'try withX before builder' escalation step; code snippet with the withX method in a comment is a bit awkward."}
+  },
+  "ranking": ["B","E","F","A","D","C"]
+}

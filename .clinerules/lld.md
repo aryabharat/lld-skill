@@ -20,7 +20,7 @@ When you design or change classes, modules, APIs or in-process components, judge
 
 ## Change requests on existing code
 
-- A new variant should be an addition, not an edit: rules as a list of rule objects, algorithms behind a strategy interface, side effects as events on a bus.
+- Make the smallest clean change unless there is evidence the same kind of change will keep coming (the user says so, or it is the third such edit). Then a new variant should be an addition, not an edit: rules as a list of rule objects, algorithms behind a strategy interface, side effects as events on a bus. When you defer the refactor, name it and its trigger in one line.
 - A chain of independent `if (cond) return` checks that every feature edits becomes a rule list. If the rules depend on order, keep explicit if/else with named methods instead.
 - Do not deduplicate by matching tokens; extract a shared concept only when it is the same domain idea. Revert a refactor that made the code harder to read.
 - Reject patterns that do not fit (State with a dense transition mesh, Observer with one fixed recipient, Builder for two fields). Say so.
@@ -35,7 +35,7 @@ When you design or change classes, modules, APIs or in-process components, judge
 
 - Name every piece of shared mutable state and give each one a mechanism: a lock over the whole composite object, a keyed single-thread executor `hash(key) % N` (narrowest key that keeps the needed order), an immutable snapshot swap, or a concurrent collection.
 - A lock gives exclusivity, not ordering. Never wait on a future while holding the lock the completer needs.
-- Request threads never block on IO: return futures, run continuations on an executor you own, do not block in constructors.
+- Socket-reader, event-loop and other small fixed pools never block on IO: return futures and run continuations on an executor you own. Synchronous IO in a thread-per-request server is fine. Never block in constructors.
 - Retry only errors marked retryable, with a limit; send the rest to a dead-letter queue; make writes idempotent with client-supplied ids.
 - Pick a fail-open or fail-closed default on purpose (a rate limiter fails open).
 
@@ -46,6 +46,12 @@ When you design or change classes, modules, APIs or in-process components, judge
 - Turn the worked example into a test with exact expected values; when it fails, check the layers bottom-up.
 - New non-trivial logic leaves at least one test.
 
+## Before showing code
+
+- Compute everything that can fail before committing state; otherwise write the compensation.
+- Money in integer minor units or a decimal type, never `double`, including helpers. Read the clock once per operation.
+- Every foreign key has a deliberate `ON DELETE`; audit columns must not block deletes.
+
 ## Output
 
-For a design: assumptions and skipped scope, core requirements, entities, API signatures, a class diagram, the core algorithm with costs, patterns used and rejected, the concurrency plan, code for the critical path, tests, and how the next requirement slots in. Keep it proportional: a one-line question gets a short answer.
+Size the answer to the question: a pattern question under 250 words, a change to existing code under 600, a review under 900, a full design under 1500. No diagram unless asked or more than five classes. For a design: assumptions and skipped scope, core requirements, entities, API signatures, a class diagram, the core algorithm with costs, patterns used and rejected, the concurrency plan, code for the critical path, tests, and how the next requirement slots in. Keep it proportional: a one-line question gets a short answer.

@@ -1,0 +1,80 @@
+{
+  "task": "T6",
+  "answers": {
+    "A": {
+      "checklist": [1, 1, 1, 1, 1, 1, 1],
+      "correctness": 8,
+      "design": 9,
+      "clarity": 9,
+      "proportionality": 7,
+      "errors": [
+        "Small duplicate-load window: getAsync releases the lock on a miss before putIfAbsent, so a thread can miss just as another load installs and removes its inflight future, then start a second load (an extra DB call, not a stale value)",
+        "Stray 'ponytail:' marker in the text"
+      ],
+      "note": "Complete, verifiable design: access-order LinkedHashMap plus a lazily cleaned expiry heap, so expired entries are evicted before LRU ones; the load runs off-lock and is collapsed, put beats a stale load atomically under the lock, and the tests are strong."
+    },
+    "B": {
+      "checklist": [1, 1, 1, 1, 1, 0, 1],
+      "correctness": 6,
+      "design": 7,
+      "clarity": 8,
+      "proportionality": 7,
+      "errors": [
+        "The loader's put can overwrite a newer concurrent put with stale DB data; the answer names the fix but leaves it out of the code even though the task requires concurrent get/put safety",
+        "Only Exception is caught: if the loader throws an Error, finally removes the inflight entry but never completes the future, so waiters on join() hang forever (no timeout)",
+        "Eviction takes the LRU tail even when expired entries exist elsewhere (acknowledged)"
+      ],
+      "note": "Clean HashMap plus intrusive list under one lock with correct single-flight, but the put-vs-load stale overwrite is only discussed, not fixed."
+    },
+    "C": {
+      "checklist": [1, 1, 1, 1, 1, 0, 1],
+      "correctness": 5,
+      "design": 7,
+      "clarity": 8,
+      "proportionality": 7,
+      "errors": [
+        "The put-wins claim is false: put does inflight.remove(key) and install outside one shared lock, and the loader does inflight.remove(key, mine) and then install(...) as two separate steps. If the loader's remove succeeds, then put installs the new value, then the loader installs, the stale DB value overwrites the newer put",
+        "No constructor validation (capacity <= 0)"
+      ],
+      "note": "Reasonable structure and good trade-off table, but the stale-load guard it advertises has a real race because the check and the install are not atomic with put."
+    },
+    "D": {
+      "checklist": [1, 1, 1, 1, 1, 1, 1],
+      "correctness": 8,
+      "design": 8,
+      "clarity": 8,
+      "proportionality": 6,
+      "errors": [
+        "Only RuntimeException is caught around the load: an Error leaves the future incomplete and the inflight entry in place, so later gets wait out the 2 s timeout until it is invalidated or put",
+        "Expired entries keep using capacity and can push out live ones (acknowledged)"
+      ],
+      "note": "Correct: the loader's install and put/invalidate are atomic under the same lock, with a single-flight re-check, but the test lists are duplicated and it runs long."
+    },
+    "E": {
+      "checklist": [1, 1, 1, 1, 1, 1, 1],
+      "correctness": 9,
+      "design": 8,
+      "clarity": 8,
+      "proportionality": 9,
+      "errors": [
+        "Claim that expired entries 'are also the first to be evicted by LRU since nobody reads them' is not generally true: an entry read just before expiry sits near the MRU end",
+        "await has no timeout, so a hung DB call pins waiters"
+      ],
+      "note": "Simplest fully correct version: the inflight map sits under the same lock as the data, so check-and-register is atomic and put beats a stale load, and it is right-sized."
+    },
+    "F": {
+      "checklist": [1, 1, 1, 1, 1, 1, 1],
+      "correctness": 8,
+      "design": 9,
+      "clarity": 8,
+      "proportionality": 7,
+      "errors": [
+        "Constructor omitted, so the final fields as shown would not compile (excerpt)",
+        "Unchecked cast (K) soonest.key because Node stores the key as Object",
+        "No capacity validation: capacity 0 makes makeRoomLocked call iterator().next() on an empty map"
+      ],
+      "note": "Strong design: futures act as placeholder nodes for collapsing, an identity check stops stale installs, a TreeSet expiry index evicts expired entries before LRU ones, and futures complete outside the lock, but the code is an incomplete excerpt."
+    }
+  },
+  "ranking": ["A", "E", "F", "D", "B", "C"]
+}

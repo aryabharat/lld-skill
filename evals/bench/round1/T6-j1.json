@@ -1,0 +1,24 @@
+{
+  "task": "T6",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": ["put-vs-load race: put does inflight.remove and install() as two separate steps outside one lock, and the loader does inflight.remove(key,mine) then install() also non-atomically; interleaving loader-remove, put-remove, put-install, loader-install lets the older DB value overwrite the put, contradicting the stated guarantee", "Small window where a load's inflight.remove precedes its install lets a new miss start a duplicate load", "Executor rejection not handled (future never completes until the 2s timeout)"],
+      "note": "Clean design with the right decisions, but the put-wins-over-load guarantee is not atomic and can be violated."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 7,
+      "errors": ["Uses Clock.millis (wall clock) for TTL; NTP jumps can expire or resurrect entries early or late"],
+      "note": "Future stored in the map plus a TreeSet expiry index under one lock, identity check on completion, completion outside the lock and expired-first eviction: correct and well argued, if long."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8,
+      "errors": ["Only RuntimeException is caught around the load; an Error leaves the in-flight future registered and never completed, so waiters time out and later gets for that key hit the dead future"],
+      "note": "Correct single-flight with the stale-load check done atomically under the lock; a solid, right-sized answer."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 7, "proportionality": 8,
+      "errors": ["Put/invalidate during an in-flight load is not handled in code: the loader's later put overwrites a fresher put and resurrects invalidated keys (acknowledged only as an optional fix)", "Waiters use f.join() with no timeout despite the text recommending one; an Error from the loader is not caught, so waiters on that future hang forever", "loadExecutor is injected but never used"],
+      "note": "Correct intrusive LRU and single-flight, but leaves the stale-load overwrite race open and the code contradicts its own timeout advice."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 9,
+      "errors": ["Waiters join() with no timeout, so a hung DB call pins all waiting threads", "Claim that expired entries are the first evicted by LRU is only approximately true"],
+      "note": "Map and in-flight registry under one lock make the hit/miss/register decision atomic; short, correct and well reasoned."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 7, "proportionality": 7,
+      "errors": ["No re-check after putIfAbsent, so a miss racing with a just-completed load can start a duplicate load (harmless but avoidable)", "Stray 'ponytail:' artifact in the text; 'a few million ops/s on one lock' is an unsupported figure", "Executor rejection not handled"],
+      "note": "Correct expired-first eviction with a lazily compacted heap and atomic put-vs-load check; good tests, slightly noisy write-up."}
+  },
+  "ranking": ["B","F","E","C","A","D"]
+}

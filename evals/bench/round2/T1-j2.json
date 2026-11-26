@@ -1,0 +1,24 @@
+{
+  "task": "T1",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 9, "proportionality": 7,
+      "errors": ["`payments` field used in exit() is never declared", "Ticket.beginExit/abortExit/close not shown though the CAS state machine is load-bearing", "Test list numbering out of order (11 before 9)", "Night rate as an after-base rule that 'reprices hours' is awkward since base has already summed the hours", "Closed tickets never removed from the map (unbounded growth, minor)"],
+      "note": "Most complete and correct: atomic pollFirst on a sorted set, explicit rule order with golden test, careful exit ordering with CAS and payment-failure rollback, concrete hand-computable tests."},
+    "B": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 9, "proportionality": 8,
+      "errors": ["Assumption says weekend is judged by entry day, but the code prices hour by hour (internal contradiction)", "leave() frees the spot and removes the ticket before pricing; if pricing throws the ticket is lost with no fee", "do-while silently charges one hour when exit is before entry instead of rejecting"],
+      "note": "Single lock around two structures is correct and well justified, ordering enforced by the tariff (sorted by Kind) with a clear design-it-twice comparison, but has a stated/coded inconsistency and release-before-price ordering."},
+    "C": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 6, "design": 7, "clarity": 7, "proportionality": 7,
+      "errors": ["exit() hard-codes ZoneId.of(\"Asia/Kolkata\") instead of injecting it", "exit() removes the ticket before pricing; if pricing throws the spot is never released (leak)", "Rejects a 0-minute stay (exit == entry throws) though a minimum charge is the usual rule", "floorOf() and ParkingLot constructor undefined", "Text recommends hourlyRate(VehicleType, ZonedDateTime) from day one but the code uses DayType", "Magic integer order() values spread across rule classes make ordering implicit to rule authors"],
+      "note": "Correct lock-free per-floor queues and a rule pipeline, but several loose ends and self-contradictions in the code."},
+    "D": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 5,
+      "errors": ["exit() closes the ticket before pricing; if pricing throws (e.g. exit-before-entry validation) the spot is never released", "Weekend decided only by entry day, so a Fri-to-Sat stay is billed all weekday (documented as v1, but weaker than needed)", "MemberDiscountRule uses integer truncation rather than explicit rounding", "exit(Ticket) trusts a caller-held ticket object with no lookup of active tickets", "Tests listed twice (prose and code), making it long"],
+      "note": "Solid and honest (notes queue tail-ordering trade-off, real concurrency test code), but overlong and with a release leak on pricing failure."},
+    "E": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 7, "proportionality": 9,
+      "errors": ["Stray 'skipped:' and 'ponytail:' backtick blocks read like leaked template text", "Night rate as a whole-total PricingStep fits poorly with per-hour billing (only hinted)", "Rejected alternatives are thin: only implicitly rejects a lock and first-match rule sets"],
+      "note": "Concise and correct: atomic pollFirst, time passed as data, ordered pipeline with an order test, rollback on pricing failure, and a mutation check proving the concurrency test can fail."},
+    "F": {"checklist": [1,1,1,1,1,1,1,1], "correctness": 7, "design": 7, "clarity": 8, "proportionality": 8,
+      "errors": ["exit() removes the ticket before pricing; if pricing throws the spot leaks", "NightRateRule overlapsNight is a stub returning false", "Weekend judged by entry day only, so cross-boundary stays mis-billed (documented)", "Missing constructors on rule and lot classes"],
+      "note": "Clean, proportionate design with good rejected alternatives (synchronized, per-spot AtomicBoolean), but simpler billing and the same release-on-failure gap."}
+  },
+  "ranking": ["A","E","B","D","F","C"]
+}

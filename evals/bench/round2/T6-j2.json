@@ -1,0 +1,24 @@
+{
+  "task": "T6",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 8, "proportionality": 8,
+          "errors": ["put-vs-load race not actually closed: loader does inflight.remove(key, mine) and then install() takes the lock separately; a put landing between those two steps is overwritten by the older loaded value, contradicting the stated guarantee", "Window between loader's inflight.remove and install lets a concurrent miss start a second load (duplicate DB call, not a correctness bug)"],
+          "note": "Clean, well-argued single-lock design with executor-based single-flight, but the claimed put-wins guarantee has a real race because inflight removal and install are not under the same lock."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 7, "proportionality": 7,
+          "errors": ["Miss check (under lock) and inflight.putIfAbsent are not atomic: a load that completes in between lets a second caller start another load, so the stated 'one load per missing key' guarantee is slightly overstated", "Stray 'ponytail:' label in the trade-off note"],
+          "note": "Correct and careful (put and install both under the lock, expired-first eviction via a heap with lazy stale refs), slightly heavier than needed."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 9,
+          "errors": ["No timeout on waiters' join; a hung DB call pins all waiters (minor)"],
+          "note": "Simplest fully correct answer: map and in-flight table under one lock make miss detection, loader election and stale-load rejection atomic, with the rejected lock-free alternative and when to switch stated."},
+    "D": {"checklist": [1,1,1,1,1,0,1], "correctness": 5, "design": 7, "clarity": 7, "proportionality": 7,
+          "errors": ["Loader unconditionally calls put() after the 50 ms load, so a concurrent put/invalidate during the load is overwritten by stale DB data for a full TTL; the fix is described but not implemented", "loadExecutor is injected and stored but never used"],
+          "note": "Good intrusive LRU and single-flight, but leaves the stale-load-overwrites-put race open, which matters under concurrent get/put."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 8, "proportionality": 7,
+          "errors": ["No constructor shown, so the final fields are never initialised as written", "Loader returning null is cached as a null value; not handled", "In-flight placeholders count toward capacity and can be evicted (documented, acceptable)"],
+          "note": "Strong design: placeholder future node makes collapsing atomic, identity check rejects stale loads, TreeSet gives expired-first eviction, futures completed outside the lock; small gaps in the shown code."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 6,
+          "errors": ["Only RuntimeException is caught: an Error from the loader leaves the future incomplete and in inFlight forever, so every later get for that key times out after 2 s", "Test code references an undefined helper (waitUntilInFlight) and shadows await"],
+          "note": "Correct single-lock design with re-check after registering and the stale-load check under the same lock as put; longer than needed with tests listed twice."}
+  },
+  "ranking": ["C","E","F","B","A","D"]
+}

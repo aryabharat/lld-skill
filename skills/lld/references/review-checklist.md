@@ -10,7 +10,7 @@ The course ranks correctness first, then readability and extensibility; polish c
 
 | Severity | What falls here | Examples |
 |---|---|---|
-| **Must-fix** | Wrong results, broken invariants, races, data loss, blocked request threads, unvalidated state mutation | Float money; zero-sum not checked; torn read between two writes; settle deletes history; `.get()`/`join()` on an IO thread; network call in a constructor; retries exhausted and message only logged; occupied cell accepted; index not cleared on overwrite [L43, L45, L54, L68, L79, L58, L93] |
+| **Must-fix** | Wrong results, broken invariants, races, data loss, blocked event-loop or reader threads (small fixed pools that must stay free), unvalidated state mutation | Float money; zero-sum not checked; torn read between two writes; settle deletes history; `.get()`/`join()` on a socket-reader or event-loop thread; network call in a constructor; retries exhausted and message only logged; occupied cell accepted; index not cleared on overwrite [L43, L45, L54, L68, L79, L58, L93] |
 | **Should-fix** | Design that makes the next change an edit of tested code, or hides bugs | `instanceof`/type switch in a generic service; base-class member some subtypes cannot honour; nested `Map<.., Map<..>>` in signatures; raw `null` for "not found"; system clock read inside logic; missing test for an edge rule; pattern named but not matching the code [L3, L5, L23, L25, L33, L89] |
 | **Nice-to-have** | Readability and hygiene with no behaviour risk | Abbreviated names; missing `toString`; package layout; typed ID wrappers (may be overkill, say why); formatter not run [L7, L13, L50, L68] |
 
@@ -94,7 +94,7 @@ Escalate a should-fix to must-fix when it sits on a hot path, money, or shared m
 - Is ordering defined as a scope (per key/topic/entity) and enforced by routing the key to one single-threaded lane? [L55, L62, L65]
 - Is the lane key the narrowest one meeting the guarantee, with a non-negative hash? [L63, L65, L68]
 - Can one slow or hot key stall unrelated keys on the same lane? [L62, L63, L65]
-- Do request threads avoid all blocking IO, with slow work on a separate bounded executor? [L54, L75, L76]
+- Do socket-reader, event-loop and other small fixed pools avoid blocking IO, with slow work on a separate bounded executor? In a thread-per-request server, synchronous IO is normal; flag it only when latency or pool exhaustion is a real risk, as should-fix. [L54, L75, L76]
 - Does any constructor perform network IO or block on a future? [L78, L79]
 - Do IO methods return futures, completed on success, exception and timeout? [L54, L56, L79]
 - Do concurrent misses on one key cause exactly one backend call (request collapsing)? [L53, L59]

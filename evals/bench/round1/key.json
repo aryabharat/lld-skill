@@ -1,0 +1,130 @@
+{
+ "T1-j1": {
+  "A": "arm-lld",
+  "B": "arm-sdp",
+  "C": "base",
+  "D": "arm-sds",
+  "E": "arm-qfz",
+  "F": "arm-malay"
+ },
+ "T2-j1": {
+  "A": "base",
+  "B": "arm-lld",
+  "C": "arm-sds",
+  "D": "arm-sdp",
+  "E": "arm-malay",
+  "F": "arm-qfz"
+ },
+ "T3-j1": {
+  "A": "base",
+  "B": "arm-lld",
+  "C": "arm-sds",
+  "D": "arm-sdp",
+  "E": "arm-qfz",
+  "F": "arm-malay"
+ },
+ "T4-j1": {
+  "A": "arm-sds",
+  "B": "base",
+  "C": "arm-malay",
+  "D": "arm-sdp",
+  "E": "arm-qfz",
+  "F": "arm-lld"
+ },
+ "T5-j1": {
+  "A": "arm-sdp",
+  "B": "arm-qfz",
+  "C": "arm-malay",
+  "D": "arm-sds",
+  "E": "base",
+  "F": "arm-lld"
+ },
+ "T6-j1": {
+  "A": "arm-qfz",
+  "B": "arm-lld",
+  "C": "arm-sds",
+  "D": "base",
+  "E": "arm-sdp",
+  "F": "arm-malay"
+ },
+ "T7-j1": {
+  "A": "arm-qfz",
+  "B": "arm-sds",
+  "C": "arm-lld",
+  "D": "arm-sdp",
+  "E": "base",
+  "F": "arm-malay"
+ },
+ "T8-j1": {
+  "A": "base",
+  "B": "arm-sds",
+  "C": "arm-sdp",
+  "D": "arm-lld",
+  "E": "arm-malay",
+  "F": "arm-qfz"
+ },
+ "T1-j2": {
+  "A": "arm-malay",
+  "B": "arm-sds",
+  "C": "arm-qfz",
+  "D": "arm-sdp",
+  "E": "base",
+  "F": "arm-lld"
+ },
+ "T2-j2": {
+  "A": "base",
+  "B": "arm-malay",
+  "C": "arm-sdp",
+  "D": "arm-qfz",
+  "E": "arm-lld",
+  "F": "arm-sds"
+ },
+ "T3-j2": {
+  "A": "arm-malay",
+  "B": "arm-qfz",
+  "C": "arm-lld",
+  "D": "base",
+  "E": "arm-sdp",
+  "F": "arm-sds"
+ },
+ "T4-j2": {
+  "A": "arm-qfz",
+  "B": "arm-sds",
+  "C": "arm-lld",
+  "D": "arm-malay",
+  "E": "base",
+  "F": "arm-sdp"
+ },
+ "T5-j2": {
+  "A": "arm-sds",
+  "B": "arm-lld",
+  "C": "arm-sdp",
+  "D": "base",
+  "E": "arm-malay",
+  "F": "arm-qfz"
+ },
+ "T6-j2": {
+  "A": "arm-malay",
+  "B": "arm-lld",
+  "C": "arm-qfz",
+  "D": "arm-sdp",
+  "E": "base",
+  "F": "arm-sds"
+ },
+ "T7-j2": {
+  "A": "arm-malay",
+  "B": "base",
+  "C": "arm-sdp",
+  "D": "arm-sds",
+  "E": "arm-qfz",
+  "F": "arm-lld"
+ },
+ "T8-j2": {
+  "A": "base",
+  "B": "arm-sdp",
+  "C": "arm-malay",
+  "D": "arm-lld",
+  "E": "arm-qfz",
+  "F": "arm-sds"
+ }
+}

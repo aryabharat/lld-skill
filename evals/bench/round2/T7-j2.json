@@ -1,0 +1,12 @@
+{
+  "task": "T7",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 9, "errors": [], "note": "Tight, correct schema with composite same-org FKs, a query-keyed index table, and an access query that also handles public/internal visibility in SQL."},
+    "B": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 8, "proportionality": 8, "errors": ["Calls every access-check branch 'index-only or close to it'; most branches need heap fetches for permission/role, a loose claim rather than a bug"], "note": "Solid and correct with good polymorphic-vs-two-tables reasoning and a sensible denormalisation trigger, but visibility is left to the app and adds little beyond A."},
+    "C": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 7, "errors": [], "note": "Invariants listed up front and enforced in schema, org base permission, a correct FOR UPDATE last-admin guard and targeted tests; somewhat longer than the question needs."},
+    "D": {"checklist": [1,1,1,1,1,1], "correctness": 6, "design": 6, "clarity": 8, "proportionality": 8, "errors": ["granted_by REFERENCES users(id) with no ON DELETE action, so deleting any user who ever granted access fails with an FK violation", "team_memberships has no org_id or FK to org_memberships, so a non-member can be put on a team and removal from the org relies on application code to clean up team memberships", "Permission ladder reduced to read/write/admin (simplification, not stated as a trade-off)"], "note": "The effective-access view is a clean single entry point, but the schema drops the team-member-is-org-member constraint and has a user-delete-blocking FK."},
+    "E": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 8, "errors": [], "note": "Each index is tied to a numbered query, ON DELETE choices are explained, the last-admin race is closed by locking the org row, and the tests are concrete."},
+    "F": {"checklist": [1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 9, "proportionality": 7, "errors": [], "note": "Correct and well argued, with the list-column rejection stated explicitly and a full index-to-query table; the feature table and index list repeat each other a little."}
+  },
+  "ranking": ["A","E","C","F","B","D"]
+}
