@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="752" height="356" viewBox="0 0 752 356" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+<rect width="752" height="356" rx="8" fill="#1a1a19"/>
+<text x="20" y="30" font-size="16" font-weight="600" fill="#f0efec">Round 2: mean rank per task (1 = best of 6, lighter is better)</text>
+<text x="242.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T1</text>
+<text x="242.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Parking lot</text>
+<text x="306.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T2</text>
+<text x="306.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Add rule</text>
+<text x="370.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T3</text>
+<text x="370.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Builder?</text>
+<text x="434.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T4</text>
+<text x="434.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">State?</text>
+<text x="498.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T5</text>
+<text x="498.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Review</text>
+<text x="562.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T6</text>
+<text x="562.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Cache</text>
+<text x="626.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T7</text>
+<text x="626.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Schema</text>
+<text x="690.0" y="66" font-size="11" font-weight="600" text-anchor="middle" fill="#c3c2b7">T8</text>
+<text x="690.0" y="80" font-size="10" text-anchor="middle" fill="#8f8e88">Refactor</text>
+<text x="196" y="113.0" font-size="13" text-anchor="end" fill="#f0efec" font-weight="700">lld (this repo)</text>
+<rect x="211.0" y="93.0" width="62" height="32" rx="4" fill="#cde2fb"/>
+<text x="242.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">1.0</text>
+<rect x="275.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="306.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<rect x="339.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="370.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="403.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="434.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="467.0" y="93.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="498.0" y="113.0" font-size="12" text-anchor="middle" fill="#ffffff">5.5</text>
+<rect x="531.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="562.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="595.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="626.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<rect x="659.0" y="93.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="690.0" y="113.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<text x="196" y="147.0" font-size="13" text-anchor="end" fill="#f0efec">qfzhao670</text>
+<rect x="211.0" y="127.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="242.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.5</text>
+<rect x="275.0" y="127.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="306.0" y="147.0" font-size="12" text-anchor="middle" fill="#ffffff">5.0</text>
+<rect x="339.0" y="127.0" width="62" height="32" rx="4" fill="#cde2fb"/>
+<text x="370.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">1.0</text>
+<rect x="403.0" y="127.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="434.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<rect x="467.0" y="127.0" width="62" height="32" rx="4" fill="#cde2fb"/>
+<text x="498.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">1.0</text>
+<rect x="531.0" y="127.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="562.0" y="147.0" font-size="12" text-anchor="middle" fill="#ffffff">5.5</text>
+<rect x="595.0" y="127.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="626.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="659.0" y="127.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="690.0" y="147.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<text x="196" y="181.0" font-size="13" text-anchor="end" fill="#f0efec">malay44/lld-skills</text>
+<rect x="211.0" y="161.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="242.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<rect x="275.0" y="161.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="306.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<rect x="339.0" y="161.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="370.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.5</text>
+<rect x="403.0" y="161.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="434.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.0</text>
+<rect x="467.0" y="161.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="498.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.0</text>
+<rect x="531.0" y="161.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="562.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="595.0" y="161.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="626.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="659.0" y="161.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="690.0" y="181.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<text x="196" y="215.0" font-size="13" text-anchor="end" fill="#f0efec">tylerpayne</text>
+<rect x="211.0" y="195.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="242.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<rect x="275.0" y="195.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="306.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<rect x="339.0" y="195.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="370.0" y="215.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<rect x="403.0" y="195.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="434.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.0</text>
+<rect x="467.0" y="195.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="498.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.0</text>
+<rect x="531.0" y="195.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="562.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<rect x="595.0" y="195.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="626.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.0</text>
+<rect x="659.0" y="195.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="690.0" y="215.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<text x="196" y="249.0" font-size="13" text-anchor="end" fill="#f0efec">software-design-philosophy</text>
+<rect x="211.0" y="229.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="242.0" y="249.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.0</text>
+<rect x="275.0" y="229.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="306.0" y="249.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<rect x="339.0" y="229.0" width="62" height="32" rx="4" fill="#3987e5"/>
+<text x="370.0" y="249.0" font-size="12" text-anchor="middle" fill="#0b0b0b">4.0</text>
+<rect x="403.0" y="229.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="434.0" y="249.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<rect x="467.0" y="229.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="498.0" y="249.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.0</text>
+<rect x="531.0" y="229.0" width="62" height="32" rx="4" fill="#cde2fb"/>
+<text x="562.0" y="249.0" font-size="12" text-anchor="middle" fill="#0b0b0b">1.5</text>
+<rect x="595.0" y="229.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="626.0" y="249.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<rect x="659.0" y="229.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="690.0" y="249.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.5</text>
+<text x="196" y="283.0" font-size="13" text-anchor="end" fill="#f0efec">no skill</text>
+<rect x="211.0" y="263.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="242.0" y="283.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<rect x="275.0" y="263.0" width="62" height="32" rx="4" fill="#cde2fb"/>
+<text x="306.0" y="283.0" font-size="12" text-anchor="middle" fill="#0b0b0b">1.0</text>
+<rect x="339.0" y="263.0" width="62" height="32" rx="4" fill="#6da7ec"/>
+<text x="370.0" y="283.0" font-size="12" text-anchor="middle" fill="#0b0b0b">3.0</text>
+<rect x="403.0" y="263.0" width="62" height="32" rx="4" fill="#9ec5f4"/>
+<text x="434.0" y="283.0" font-size="12" text-anchor="middle" fill="#0b0b0b">2.5</text>
+<rect x="467.0" y="263.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="498.0" y="283.0" font-size="12" text-anchor="middle" fill="#ffffff">5.5</text>
+<rect x="531.0" y="263.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="562.0" y="283.0" font-size="12" text-anchor="middle" fill="#ffffff">5.5</text>
+<rect x="595.0" y="263.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="626.0" y="283.0" font-size="12" text-anchor="middle" fill="#ffffff">5.0</text>
+<rect x="659.0" y="263.0" width="62" height="32" rx="4" fill="#1c5cab"/>
+<text x="690.0" y="283.0" font-size="12" text-anchor="middle" fill="#ffffff">6.0</text>
+<text x="20" y="340" font-size="11" fill="#8f8e88">Each cell averages two judges. T5 was later re-checked after a review fix: lld ranked 1st from both judges.</text>
+</svg>
