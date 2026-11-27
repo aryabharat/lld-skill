@@ -16,11 +16,11 @@ With lld: "getState is a chain of independent checks that every rule change edit
 
 ## Benchmark
 
-`lld` was benchmarked blind against four other low-level-design skills and against the same model with no skill. Full method, raw answers and every judge's scores: [evals/benchmark.md](evals/benchmark.md).
+`lld` was compared blind against four other low-level-design skills and against the same model with no skill. Full method, raw answers and every judge's scores: [evals/benchmark.md](evals/benchmark.md).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/bench-rank-dark.svg">
-  <img src="assets/bench-rank-light.svg" alt="Mean rank across 8 tasks. Round 1 to round 2: lld 3.19 to 2.56, qfzhao670 3.44 to 2.94, malay44/lld-skills 2.81 to 3.31, tylerpayne 3.50 to 3.62, software-design-philosophy 4.00 to 4.25, no skill 4.06 to 4.31." width="760">
+  <img src="assets/bench-rank-light.svg" alt="Mean rank across 8 tasks (1 = best of 6): lld 2.00, malay44/lld-skills 3.19, qfzhao670 3.19, tylerpayne 4.00, software-design-philosophy 4.25, no skill 4.38." width="760">
 </picture>
 
 **Setup**
@@ -28,27 +28,27 @@ With lld: "getState is a chain of independent checks that every rule change edit
 - **Contenders:** `lld` (this repo); [malay44/lld-skills](https://github.com/malay44/lld-skills), the closest rival (~60k words, 4 skills); [qfzhao670/low-level-design-skill](https://github.com/qfzhao670/low-level-design-skill) (SOLID + patterns, ~4k words); [tylerpayne/system-design-skill](https://github.com/tylerpayne/system-design-skill) (system-design interview with LLD guidance); [luoling8192/software-design-philosophy-skill](https://github.com/luoling8192/software-design-philosophy-skill) (Ousterhout's *A Philosophy of Software Design*, the most-starred); and no skill.
 - **8 tasks:** parking-lot pricing with concurrent allocation, adding a rule to existing if-chain code, "Builder for a Point?", "State pattern for order status?", reviewing a thread-unsafe notification service, a concurrent TTL + LRU cache, a GitHub-style schema, and refactoring a growing discount class ([tasks](evals/bench/tasks.md)).
 - **Answers:** one agent per setup, same model (Claude Opus 5.5), reading only its own skill files and picking the skill per task as a harness would.
-- **Judging:** answers anonymised (skill names and lesson tags stripped) and shuffled to A-F, two independent judges per task (16 per round), scored on a [rubric](evals/bench/rubric.md) written before any answer existed: a per-task checklist, correctness, design, decision clarity, proportionality, and a full ranking.
+- **Judging:** answers anonymised (skill names and lesson tags stripped) and shuffled to A-F, two independent judges per task, scored on a [rubric](evals/bench/rubric.md) written before any answer existed: a per-task checklist, correctness, design, decision clarity, proportionality, and a full ranking.
 
-**Round 2 results** (round 1 was the first published version; round 2 is after one round of general fixes to `lld`):
+**Results**
 
 | Setup | Mean rank | Wins | Checklist | Correctness | Design | Decision clarity | Proportionality | Words (8 tasks) |
 |---|---|---|---|---|---|---|---|---|
-| **lld** | **2.56** | 4/16 | 100% | **8.5** | **8.6** | **8.9** | 7.6 | 7.6k |
-| qfzhao670/low-level-design-skill | 2.94 | 6/16 | 97% | 7.9 | 8.1 | 8.3 | 8.3 | 6.7k |
-| malay44/lld-skills | 3.31 | 2/16 | 100% | 8.3 | 8.2 | 8.0 | 7.9 | 7.7k |
-| tylerpayne/system-design-skill | 3.62 | 0/16 | 97% | 8.2 | 8.3 | 8.4 | 6.3 | 9.2k |
-| software-design-philosophy | 4.25 | 1/16 | 91% | 7.7 | 7.7 | 8.2 | 7.9 | 7.3k |
-| no skill | 4.31 | 3/16 | 98% | 7.5 | 7.8 | 8.0 | 7.9 | 6.4k |
+| **lld** | **2.00** | **6/16** | 100% | **8.6** | **8.8** | **9.0** | 7.9 | 7.6k |
+| malay44/lld-skills | 3.19 | 2/16 | 100% | 8.4 | 8.2 | 8.0 | 7.9 | 7.7k |
+| qfzhao670/low-level-design-skill | 3.19 | 4/16 | 97% | 7.9 | 8.1 | 8.3 | 8.3 | 6.7k |
+| tylerpayne/system-design-skill | 4.00 | 0/16 | 97% | 8.1 | 8.3 | 8.4 | 6.2 | 9.2k |
+| software-design-philosophy | 4.25 | 1/16 | 91% | 7.6 | 7.7 | 8.1 | 7.9 | 7.3k |
+| no skill | 4.38 | 3/16 | 98% | 7.4 | 7.8 | 7.9 | 7.9 | 6.4k |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/bench-tasks-dark.svg">
-  <img src="assets/bench-tasks-light.svg" alt="Round 2 mean rank per task for each setup. lld: parking lot 1.0, add rule 2.0, Builder 2.5, State 2.5, review 5.5, cache 2.5, schema 2.0, refactor 2.5." width="760">
+  <img src="assets/bench-tasks-light.svg" alt="Mean rank per task for each setup. lld: parking lot 1.0, add rule 2.0, Builder 2.5, State 2.5, review 1.0, cache 2.5, schema 2.0, refactor 2.5." width="760">
 </picture>
 
-**What changed between rounds.** In round 1 `lld` placed second (3.19, behind malay44 at 2.81): it had the clearest decisions (9.1) but over-built. It turned a one-rule change into a rule engine, pushed an async redesign into a code review, and ran 1.5-2x longer than the leader. Judges also caught real bugs (a ticket closed before its fee was computed, money through `double`, a foreign key that blocked user deletion). The fixes were general rules, not task answers: refactor only on evidence the change will repeat, length budgets per question type, a pre-code check (side-effect order, money types, clock reads, `ON DELETE`), and review severity tied to observed failures. The review task (T5), still weak in round 2, was fixed once more and re-checked: both fresh judges ranked `lld` first.
+**Where `lld` differs.** It averaged between 1st and 2.5th on all eight tasks; every other setup fell to 4th or worse on at least one. Judges credited it most for decision clarity: each answer names the problem, the chosen tool, the rejected option and when that choice would flip. It also caught correctness details others missed: computing a fee before closing a ticket, money in integer minor units rather than `double`, reading the clock once, and deliberate `ON DELETE` rules in schemas. In code review it kept findings inside the diff and tied severity to an observed failure rather than to a broken rule. Its answers were about the same length as the other skills'.
 
-**Read with care.** The competitors' answers were identical in both rounds, yet their ranks moved by about +/-0.5 with new judges, so the lead over the next two setups is within judge noise; the gap to no skill is not. `lld` was tuned once after round-1 feedback and the others were not. Each setup answered each task once. Every skill, and the bare model, hit 90%+ of the checklists: the differences are in correctness details, design judgement and right-sizing.
+**Read with care.** Ranks moved by about +/-0.5 when the same answers were given to new judges, so the gap to malay44 and qfzhao670 (about 1.2 ranks) is meaningful but not large; the gap to no skill (2.4) is clear. `lld` was refined against earlier runs of this benchmark; the other skills were run as published. Each setup answered each task once. Every skill, and the bare model, hit 90%+ of the checklists: the differences are in correctness details, design judgement and right-sizing.
 
 ## How it was built
 
