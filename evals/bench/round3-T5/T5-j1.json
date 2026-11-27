@@ -1,0 +1,12 @@
+{
+  "task": "T5",
+  "answers": {
+    "A": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 9, "proportionality": 7, "errors": [], "note": "Covers every rubric point with correct reserve-before-send compute, token-safe release, monotonic clock and explicit skipped/not-checked lists; slightly long but every section earns its place."},
+    "B": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 8, "clarity": 7, "proportionality": 9, "errors": [], "note": "Tight, correct line-level review with atomic compute and conditional release; leaves the channel key as an open product question and the sketch omits eviction, but it is the best-sized answer."},
+    "C": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 8, "clarity": 8, "proportionality": 8, "errors": ["Suggested NotificationService.send does not release the reserved slot on failure (raised as an explicit decision, but the sketch silently picks the block-for-60s behaviour)", "Caffeine ticker built from wall-clock millis instead of a monotonic source"], "note": "Well-prioritised and correct on the race, channel key, static state and memory; failure handling is discussed as a decision rather than fixed in the code."},
+    "D": {"checklist": [1,1,1,1,1,1,1], "correctness": 7, "design": 8, "clarity": 7, "proportionality": 7, "errors": ["Code calls throttle.release(key) without the reservation token, contradicting its own point 7 (remove(key, now)); an unconditional remove can drop a reservation it does not own", "metrics referenced but never defined"], "note": "Complete coverage, but severity ordering is odd (memory growth blocking while the cross-channel drop is only a question) and the release code is inconsistent with the prose."},
+    "E": {"checklist": [1,1,1,1,1,1,1], "correctness": 8, "design": 9, "clarity": 8, "proportionality": 5, "errors": ["Says a backward clock jump makes the window negative; it actually makes now-prev small or negative, so the user stays throttled longer", "metrics referenced but never injected"], "note": "Thorough and correct design with token release and eviction plus a full test suite, but far longer than a review needs."},
+    "F": {"checklist": [1,1,1,1,1,1,1], "correctness": 9, "design": 9, "clarity": 8, "proportionality": 8, "errors": ["metrics field used without being injected (minor sketch gap)"], "note": "Correct, well-prioritised review with token-safe release, back-compatible wrappers and a precise test gap list."}
+  },
+  "ranking": ["A","F","B","C","E","D"]
+}

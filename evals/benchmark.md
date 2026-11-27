@@ -61,7 +61,7 @@ Per task, lld ranked 1.0 on parking lot, 2.0 on the feature change and the schem
 - **Judge noise is about +/-0.5 rank.** The competitors' answers were identical in both rounds, yet malay44 moved from 2.81 to 3.31 and qfzhao from 3.44 to 2.94 with new judges. lld's lead in round 2 (0.38 over qfzhao) is inside that noise. The gap to the no-skill baseline (1.75 ranks) is not.
 - **Round 2 is not a neutral comparison.** lld was tuned once after seeing round-1 feedback; the competitors were not. The fixes are general, but treat round 2 as "after one iteration", not "out of the box".
 - **One answer per setup per task.** More runs would tighten the numbers.
-- **Where lld still loses: code review (T5).** It kept proposing an async redesign. After round 2 the review guidance was scoped further (blocking IO is must-fix only on reader or event-loop threads; no per-finding rule lines). That last change has not been re-benchmarked.
+- **Code review (T5) was lld's weak task in round 2 (rank 5.5)**: it kept proposing an async redesign. The review guidance was then scoped further (blocking IO is must-fix only on reader or event-loop threads; no per-finding rule lines). A T5-only re-check with two fresh judges and a new shuffle ranked the new lld review **1st from both judges** (others unchanged: qfzhao, malay44 and software-design-philosophy 3.0, tylerpayne 5.0, no skill 6.0). Files: [bench/round3-T5](bench/round3-T5/lld-T5.md). The other seven tasks were not re-run after this change.
 - **What every skill adds on a strong model is modest.** All setups, including no skill, hit 90%+ of the checklists. The differences are in correctness details, design judgement and right-sizing.
 
 ## Reproduce

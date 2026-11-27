@@ -1,0 +1,130 @@
+{
+ "T1-j1": {
+  "A": "arm-malay",
+  "B": "arm-sds",
+  "C": "base",
+  "D": "arm-sdp",
+  "E": "arm-qfz",
+  "F": "arm-lld"
+ },
+ "T2-j1": {
+  "A": "arm-qfz",
+  "B": "arm-malay",
+  "C": "base",
+  "D": "arm-sds",
+  "E": "arm-lld",
+  "F": "arm-sdp"
+ },
+ "T3-j1": {
+  "A": "arm-sdp",
+  "B": "arm-sds",
+  "C": "base",
+  "D": "arm-qfz",
+  "E": "arm-malay",
+  "F": "arm-lld"
+ },
+ "T4-j1": {
+  "A": "arm-qfz",
+  "B": "base",
+  "C": "arm-lld",
+  "D": "arm-malay",
+  "E": "arm-sdp",
+  "F": "arm-sds"
+ },
+ "T5-j1": {
+  "A": "arm-lld",
+  "B": "arm-malay",
+  "C": "arm-sdp",
+  "D": "base",
+  "E": "arm-sds",
+  "F": "arm-qfz"
+ },
+ "T6-j1": {
+  "A": "arm-qfz",
+  "B": "arm-malay",
+  "C": "arm-sdp",
+  "D": "arm-sds",
+  "E": "arm-lld",
+  "F": "base"
+ },
+ "T7-j1": {
+  "A": "arm-sdp",
+  "B": "arm-lld",
+  "C": "arm-qfz",
+  "D": "base",
+  "E": "arm-malay",
+  "F": "arm-sds"
+ },
+ "T8-j1": {
+  "A": "arm-qfz",
+  "B": "base",
+  "C": "arm-sds",
+  "D": "arm-lld",
+  "E": "arm-malay",
+  "F": "arm-sdp"
+ },
+ "T1-j2": {
+  "A": "base",
+  "B": "arm-sdp",
+  "C": "arm-malay",
+  "D": "arm-lld",
+  "E": "arm-sds",
+  "F": "arm-qfz"
+ },
+ "T2-j2": {
+  "A": "arm-sdp",
+  "B": "arm-malay",
+  "C": "arm-lld",
+  "D": "arm-qfz",
+  "E": "arm-sds",
+  "F": "base"
+ },
+ "T3-j2": {
+  "A": "arm-sdp",
+  "B": "arm-qfz",
+  "C": "arm-malay",
+  "D": "base",
+  "E": "arm-sds",
+  "F": "arm-lld"
+ },
+ "T4-j2": {
+  "A": "arm-malay",
+  "B": "arm-sds",
+  "C": "base",
+  "D": "arm-qfz",
+  "E": "arm-lld",
+  "F": "arm-sdp"
+ },
+ "T5-j2": {
+  "A": "arm-sdp",
+  "B": "arm-malay",
+  "C": "arm-lld",
+  "D": "arm-sds",
+  "E": "arm-qfz",
+  "F": "base"
+ },
+ "T6-j2": {
+  "A": "base",
+  "B": "arm-sdp",
+  "C": "arm-sds",
+  "D": "arm-qfz",
+  "E": "arm-lld",
+  "F": "arm-malay"
+ },
+ "T7-j2": {
+  "A": "arm-malay",
+  "B": "arm-qfz",
+  "C": "arm-lld",
+  "D": "base",
+  "E": "arm-sds",
+  "F": "arm-sdp"
+ },
+ "T8-j2": {
+  "A": "arm-sdp",
+  "B": "arm-sds",
+  "C": "arm-lld",
+  "D": "base",
+  "E": "arm-qfz",
+  "F": "arm-malay"
+ }
+}
