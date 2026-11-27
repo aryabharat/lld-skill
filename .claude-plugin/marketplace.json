@@ -4,6 +4,6 @@
   "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.",
   "owner": { "name": "aryabharat", "url": "https://github.com/aryabharat" },
   "plugins": [
-    { "name": "lld", "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.", "version": "2.0.0", "source": "./", "category": "development" }
+    { "name": "lld", "description": "Low-level design for coding agents: classes, APIs, patterns, concurrency and tests, decided the way Gaurav Sen's InterviewReady LLD course teaches. For real codebases and interviews.", "version": "2.1.0", "source": "./", "category": "development" }
   ]
 }
