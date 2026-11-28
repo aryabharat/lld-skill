@@ -103,6 +103,32 @@ codex plugin marketplace add aryabharat/lld-skill
 codex plugin add lld@lld-skill
 ```
 
+**OpenCode:**
+
+OpenCode supports these `SKILL.md` files directly; no separate plugin package is needed. Clone the repo once (or use your existing clone):
+
+```bash
+git clone https://github.com/aryabharat/lld-skill.git "$HOME/lld-skill"
+```
+
+For all projects:
+
+```bash
+mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills"
+cp -R "$HOME/lld-skill/skills/." "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills/"
+```
+
+Or, for one project only, run from that project's root:
+
+```bash
+mkdir -p .opencode/skills
+cp -R "$HOME/lld-skill/skills/." .opencode/skills/
+```
+
+Copy all five skills together: the smaller skills use the core `lld` reference library. Before copying, back up any existing `lld`, `lld-help`, `lld-interview`, `lld-patterns` or `lld-review` folders at the destination; matching files will be overwritten. To update, run `git -C "$HOME/lld-skill" pull --ff-only` and repeat the copy for your chosen destination.
+
+Ask normally and OpenCode can choose a relevant skill, or mention one explicitly, for example `@lld`, `@lld-review` or `@lld-interview`. These are skills, not OpenCode slash commands.
+
 **GitHub Copilot CLI:**
 
 ```bash
@@ -142,8 +168,8 @@ Ask normally. The core skill triggers on design work:
 - "Add refunds to this payment module without touching the settlement code."
 - "Is this cache thread-safe?"
 - "Strategy or State for order status?"
-- `/lld-review` (or "lld review my staged changes")
-- `/lld-interview rate limiter 45` or "mock interview me on Splitwise"
+- "lld review my staged changes" (or `/lld-review` where supported)
+- "mock interview me on Splitwise" (or `/lld-interview rate limiter 45` where supported)
 
 ## Develop
 
